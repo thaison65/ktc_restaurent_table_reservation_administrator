@@ -1,0 +1,18 @@
+div#container {
+  display: grid;
+  grid-template-columns: 252px 1fr;
+  grid-template-rows: 192px 1fr;
+  grid-template-areas:
+    'sidebar header'
+    'sidebar main';
+  min-height: 100dvh;
+  background-color: #fafafa;
+
+  main {
+    grid-area: main;
+    background-color: #ffffff;
+    border-radius: 8px 0 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
