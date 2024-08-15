@@ -3,7 +3,9 @@ import SideBar from '../SideBar';
 
 import './DefaultLayout.scss';
 
-function DefaultLayout({ children, title }) {
+function DefaultLayout({ ...props }) {
+  const { children, title } = props;
+
   return (
     <>
       <div id='container'>

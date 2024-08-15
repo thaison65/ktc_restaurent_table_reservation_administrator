@@ -1,22 +1,28 @@
-import ListTable from '~/pages/ListTable';
-import Maps from '~/pages/Maps';
-import Order from '~/pages/Order';
+import ListTablePage from '~/pages/ListTable';
+import MapsPage from '~/pages/Maps';
+import OrderPage from '~/pages/Order';
+import SettingPage from '~/pages/Setting';
 
 const privateRouter = [
   {
     path: '/KTC_FE_MINI_PROJECT/list-table',
-    component: ListTable,
+    component: ListTablePage,
     name: 'Danh sách bàn',
   },
   {
     path: '/KTC_FE_MINI_PROJECT',
-    component: Maps,
+    component: MapsPage,
     name: 'Sơ đồ vị trí',
   },
   {
     path: '/KTC_FE_MINI_PROJECT/order',
-    component: Order,
+    component: OrderPage,
     name: 'Danh sách đơn đặt bàn',
+  },
+  {
+    path: '/KTC_FE_MINI_PROJECT/setting',
+    component: SettingPage,
+    name: 'Cài đặt',
   },
 ];
 

@@ -1,28 +1,31 @@
-@use '../../../App.scss';
+@use '../../../../App.scss';
 
 li.item-sidebar {
   list-style: none;
   border-radius: 10px;
   padding: 10px 20px;
 
-  .link-item {
+  & > .link-item {
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 12px;
     text-decoration: none;
+    color: App.$white;
 
-    img {
-      color: App.$white;
-    }
-
-    .title-sibar {
+    & > span {
       width: 112px;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: -0.28px;
       line-height: 21px;
-      color: App.$white;
     }
+  }
+}
+
+li.focus-sidebar {
+  background-color: App.$white;
+  & > .link-item {
+    color: App.$black;
   }
 }

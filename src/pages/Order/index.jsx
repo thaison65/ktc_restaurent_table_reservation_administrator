@@ -1,9 +1,9 @@
-function Order() {
+function OrderPage() {
   return (
     <>
-      <p>Order</p>
+      <p>OrderPage</p>
     </>
   );
 }
 
-export default Order;
+export default OrderPage;

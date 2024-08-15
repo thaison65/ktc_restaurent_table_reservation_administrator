@@ -1,9 +1,9 @@
-function ListTable() {
+function ListTablePage() {
   return (
     <>
-      <p>ListTable</p>
+      
     </>
   );
 }
 
-export default ListTable;
+export default ListTablePage;

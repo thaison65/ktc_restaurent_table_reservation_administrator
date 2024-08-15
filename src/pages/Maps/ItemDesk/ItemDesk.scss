@@ -1,0 +1,15 @@
+@use '../../../App.scss';
+
+.item-desk {
+  border-radius: 4px;
+  height: 120px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include App.bg-status-inactive;
+}
+
+.desk-active {
+  @include App.bg-status-active;
+}
