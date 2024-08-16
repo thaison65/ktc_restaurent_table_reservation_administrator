@@ -15,6 +15,15 @@ import bellSVGIcon from './bellIcon.svg';
 import elementSVGIcon from './elementIcon.svg';
 import dateSVGIcon from './dateIcon.svg';
 
+// Icons Content
+import addSVGIcon from './addIcon.svg';
+import editSVGIcon from './editIcon.svg';
+import deleteSVGIcon from './deleteIcon.svg';
+import settingEditSVGIcon from './settingEditIcon.svg';
+
+// Icons for Modal
+import closeSVGIcon from './closeIcon.svg';
+
 export {
   categorySVGIcon,
   taskSVGIcon,
@@ -28,4 +37,9 @@ export {
   bellSVGIcon,
   elementSVGIcon,
   dateSVGIcon,
+  addSVGIcon,
+  editSVGIcon,
+  deleteSVGIcon,
+  settingEditSVGIcon,
+  closeSVGIcon,
 };

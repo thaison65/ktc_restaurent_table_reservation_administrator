@@ -1,0 +1,39 @@
+@use '../../../App.scss';
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+
+  thead {
+    text-align: center;
+    padding: 10px;
+
+    th.action-table {
+      width: 300px;
+    }
+  }
+
+  tbody {
+    text-align: center;
+
+    tr {
+      td {
+        max-width: 100px;
+        padding: 12px 10px;
+        overflow: hidden;
+      }
+
+      td.container-edit {
+        min-width: 300px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+    }
+
+    tr:nth-child(even) {
+      background-color: App.$light-gray;
+    }
+  }
+}

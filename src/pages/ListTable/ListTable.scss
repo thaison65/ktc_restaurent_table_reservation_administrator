@@ -1,0 +1,19 @@
+@use '../../App.scss';
+
+button.button {
+  @include App.button;
+}
+
+div.header-content-table {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  & > button.btn-add {
+    color: App.$primary;
+    border: 1px solid App.$primary;
+    margin-right: 20px;
+  }
+}
+

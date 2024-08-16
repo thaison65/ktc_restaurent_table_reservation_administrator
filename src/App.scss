@@ -2,6 +2,7 @@ $primary: #2ba8fb !default;
 $white: #ffffff;
 $black: #141522;
 $gray: #d9d9d9;
+$light-gray: #f9f9f9;
 $red: #ff4d5e;
 
 $border-gray: #f5f5f7;
@@ -19,4 +20,16 @@ $border-gray: #f5f5f7;
 
 @mixin btn-border-box-shadow {
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+@mixin button {
+  border: 1px solid $border-gray;
+  @include btn-border-box-shadow;
+  background-color: $white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

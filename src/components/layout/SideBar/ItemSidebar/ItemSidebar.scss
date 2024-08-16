@@ -2,6 +2,7 @@
 
 li.item-sidebar {
   list-style: none;
+  border: 1px solid App.$primary;
   border-radius: 10px;
   padding: 10px 20px;
 
@@ -21,6 +22,10 @@ li.item-sidebar {
       line-height: 21px;
     }
   }
+}
+
+li.item-sidebar:hover {
+  border: 1px solid App.$border-gray;
 }
 
 li.focus-sidebar {

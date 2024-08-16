@@ -1,12 +1,14 @@
+import './Button.scss';
+
 function Button({ ...props }) {
-  const { icon } = props;
+  const { icon, title, classes } = props;
 
   return (
-    <div>
-      <button className='btn-dropdown'>
-        <img src={icon} alt='Icon Element' /> Trạng thái
+    <>
+      <button className={classes}>
+        <img src={icon} alt='Icon Button' /> {title}
       </button>
-    </div>
+    </>
   );
 }
 

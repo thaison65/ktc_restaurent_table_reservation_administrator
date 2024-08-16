@@ -122,17 +122,10 @@ header {
       .dropdown {
         position: relative;
 
-        .btn-dropdown {
+        & > button {
           background-color: App.$white;
           color: App.$black;
-          border: 1px solid App.$border-gray;
-          @include App.btn-border-box-shadow;
-          padding: 10px 20px;
-          border-radius: 10px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 12px;
+          @include App.button;
         }
       }
     }
