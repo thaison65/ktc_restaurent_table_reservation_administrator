@@ -1,4 +1,4 @@
-import { AddSVGIcon } from '~/assets/icons';
+import { addSVGIcon } from '~/assets/icons';
 import { Button } from '~/components/common/Button';
 import Table from '~/components/common/Table';
 
@@ -191,7 +191,7 @@ function OrderPage() {
   return (
     <>
       <div className=' header-content-table'>
-        <Button icon={AddSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} />
+        <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} />
       </div>
 
       <Table titles={titles} datas={danhSachDon} />
