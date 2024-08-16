@@ -1,0 +1,30 @@
+@use '../../../../App.scss';
+
+#container-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content-modal {
+    background-color: App.$white;
+    width: 50%;
+    padding: 32px;
+
+    .header-modal {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button.icon-close {
+      width: 24px;
+      height: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: App.$gray;
+    }
+  }
+}

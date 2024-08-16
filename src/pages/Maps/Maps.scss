@@ -1,0 +1,76 @@
+@use '../../App.scss';
+
+div.header-content {
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  #container-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    #select-area {
+      min-width: 120px;
+      border-radius: 8px;
+      font-size: 16px;
+      padding: 12px 24px;
+      color: App.$black;
+      border: 1px solid App.$border-gray;
+      outline: none;
+      @include App.btn-border-box-shadow;
+
+      option.item-area {
+        border-radius: 8px;
+      }
+    }
+  }
+
+  #container-status {
+    margin-right: 52px;
+    display: flex;
+    align-items: center;
+    gap: 42px;
+
+    .note-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 60px;
+
+      .ellipse {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        @include App.bg-status-inactive;
+      }
+
+      .active {
+        @include App.bg-status-active;
+      }
+    }
+  }
+}
+
+#content-maps {
+  display: flex;
+  gap: 40px;
+
+  #container-maps {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 52px;
+  }
+
+  div.container-balcony {
+    width: 160px;
+    @include App.bg-status-inactive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 24px;
+  }
+}

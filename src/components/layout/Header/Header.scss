@@ -1,0 +1,133 @@
+@use '../../../App.scss';
+
+header {
+  grid-area: header;
+  background-color: App.$white;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+
+  #header-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.72px;
+      line-height: 36px;
+    }
+
+    div.action-user {
+      display: flex;
+      gap: 24px;
+
+      div.container-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1px solid App.$gray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transform-origin: center;
+        transform: scale(1);
+
+        .badges {
+          background-color: App.$red;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          position: absolute;
+          top: 12px;
+          right: 16px;
+        }
+      }
+
+      div.container-icon:hover {
+        transition: all 0.5s ease-in-out;
+        transform-origin: center;
+        transform: scale(1.2);
+      }
+
+      div.container-icon:active {
+        transform: scale(0.9);
+      }
+
+      .user-info {
+        width: 52px;
+        height: 52px;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: -0.24px;
+        line-height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: App.$gray;
+        color: App.$white;
+        user-select: none;
+        transform-origin: center;
+        transform: scale(1);
+      }
+
+      .user-info:hover {
+        transition: all 0.5s ease-in-out;
+        transform-origin: center;
+        transform: scale(1.2);
+      }
+
+      .user-info:active {
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  #event-page {
+    display: flex;
+    justify-content: space-between;
+
+    .container-search {
+      width: 480px;
+      height: 52px;
+      border: 1px solid App.$border-gray;
+      @include App.btn-border-box-shadow;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+
+      #search {
+        flex-grow: 1;
+        color: #54577a;
+        font-size: 12px;
+        padding: 14px 28px;
+        padding: 14px 28px;
+        padding-right: 0;
+        border: none;
+        outline: none;
+      }
+      img {
+        padding-right: 28px;
+      }
+    }
+
+    #filter-desk {
+      display: flex;
+      gap: 24px;
+
+      .dropdown {
+        position: relative;
+
+        & > button {
+          background-color: App.$white;
+          color: App.$black;
+          @include App.button;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@use '../../../../App.scss';
+
+li.item-sidebar {
+  list-style: none;
+  border: 1px solid App.$primary;
+  border-radius: 10px;
+  padding: 10px 20px;
+
+  & > .link-item {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+    text-decoration: none;
+    color: App.$white;
+
+    & > span {
+      width: 112px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.28px;
+      line-height: 21px;
+    }
+  }
+}
+
+li.item-sidebar:hover {
+  border: 1px solid App.$border-gray;
+}
+
+li.focus-sidebar {
+  background-color: App.$white;
+  & > .link-item {
+    color: App.$black;
+  }
+}

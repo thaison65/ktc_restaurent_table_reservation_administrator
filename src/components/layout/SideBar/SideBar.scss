@@ -1,0 +1,30 @@
+@use '../../../App.scss';
+
+aside {
+  grid-area: sidebar;
+  background: App.$primary;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+
+  .logo {
+    width: 165px;
+    margin-top: 32px;
+
+    h1 {
+      color: App.$white;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.96px;
+      font-style: normal;
+      line-height: 48px;
+    }
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
