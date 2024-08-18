@@ -1,0 +1,39 @@
+@use '../../../App.scss';
+
+/* SelectArea.css */
+
+.select-area-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.select-area-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.select-area-wrapper {
+  position: relative;
+}
+
+.select-area {
+  width: 100%;
+  padding: 12px 24px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: App.$white;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-area:focus {
+  border-color: App.$primary;
+  outline: none;
+}
+
+.select-area option {
+  padding: 12px;
+}

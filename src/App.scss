@@ -24,6 +24,7 @@ $border-gray: #f5f5f7;
 
 @mixin button {
   border: 1px solid $border-gray;
+  color: $black;
   @include btn-border-box-shadow;
   background-color: $white;
   padding: 10px 20px;

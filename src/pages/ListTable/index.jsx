@@ -6,6 +6,7 @@ import { Button } from '~/components/common/Button';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ModalDialog } from '~/components/common/Dialog';
+import ChildrenModal from './ChildrenModal';
 
 const titles = ['STT', 'Hình ảnh', 'ID', 'Tên bàn', 'Trạng Thái', 'Khu vực', 'Mô tả'];
 
@@ -35,22 +36,30 @@ function ListTablePage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [datas, setDatas] = useState([]);
+  const [itemUpdated, setItemUpdated] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
+    setItemUpdated({});
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  
+
+  const handleClickBtnUpdate = (data) => {
+    console.log(data);
+    setItemUpdated(data);
+    setShowModal(true);
+  };
+
   useEffect(() => {
     if (searchParams.get('search')) {
       const searchText = searchParams.get('search').toLowerCase().trim();
 
       const filteredData = danhSachBan.filter((item) => {
-        return item.tenKhachHang.toLowerCase().includes(searchText) || item.soDienThoai.toLowerCase().includes(searchText);
+        return item.name.toLowerCase().includes(searchText) || item.description.toLowerCase().includes(searchText);
       });
 
       setDatas(filteredData);
@@ -72,12 +81,10 @@ function ListTablePage() {
         <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} onClick={handleOpenModal} />
       </div>
 
-      <Table titles={titles} datas={datas} />
+      <Table titles={titles} datas={datas} handleClickBtnUpdate={handleClickBtnUpdate} />
 
-      <ModalDialog show={showModal} onClose={handleCloseModal}>
-        <h2>This is a Modal</h2>
-        <p>Content inside the modal goes here.</p>
-        <button onClick={handleCloseModal}>Close</button>
+      <ModalDialog show={showModal} onClose={handleCloseModal} title={'Thêm bàn'}>
+        <ChildrenModal onClose={handleCloseModal} item={itemUpdated} />
       </ModalDialog>
     </>
   );

@@ -1,0 +1,23 @@
+@use '../../../App.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .container-btn {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: end;
+
+    .btn-submit {
+      border: 1px solid App.$primary;
+      color: App.$primary;
+    }
+
+    button {
+      padding: 10px 30px;
+    }
+  }
+}
