@@ -18,17 +18,23 @@ function Table({ ...props }) {
           </tr>
         </thead>
         <tbody>
-          {datas.map((data, index) => (
-            <tr key={index}>
-              {Object.values(data).map((value, index) => {
-                return <td key={index}>{value}</td>;
-              })}
-              <td className='container-edit'>
-                <Button icon={settingEditSVGIcon} title={'Chỉnh sửa'} classes={'btn-update button'} />
-                <Button icon={deleteSVGIcon} title={'Xóa bàn'} classes={'btn-delete button'} />
-              </td>
+          {Array.isArray(datas) && datas.length > 0 ? (
+            datas.map((data, index) => (
+              <tr key={index}>
+                {Object.values(data).map((value, index) => {
+                  return <td key={index}>{value}</td>;
+                })}
+                <td className='container-edit'>
+                  <Button icon={settingEditSVGIcon} title={'Chỉnh sửa'} classes={'btn-update button'} />
+                  <Button icon={deleteSVGIcon} title={'Xóa bàn'} classes={'btn-delete button'} />
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td>{'Dữ liệu không có'}</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </>

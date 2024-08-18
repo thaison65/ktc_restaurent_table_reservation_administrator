@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { addSVGIcon } from '~/assets/icons';
 import { Button } from '~/components/common/Button';
 import Table from '~/components/common/Table';
@@ -188,13 +190,36 @@ const danhSachDon = [
 ];
 
 function OrderPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from API
+    //...
+    // Update danhSachBan with fetched data
+
+    if (searchParams.get('search')) {
+      const searchText = searchParams.get('search').toLowerCase().trim();
+
+      const filteredData = danhSachDon.filter((item) => {
+        return item.tenKhachHang.toLowerCase().includes(searchText) || item.soDienThoai.toLowerCase().includes(searchText);
+      });
+
+      setDatas(filteredData);
+    } else {
+      setDatas(danhSachDon);
+    }
+
+    setSearchParams({ search: searchParams.get('search') ?? '' });
+  }, [searchParams, setSearchParams]);
   return (
     <>
       <div className=' header-content-table'>
         <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} />
       </div>
 
-      <Table titles={titles} datas={danhSachDon} />
+      <Table titles={titles} datas={datas} />
     </>
   );
 }
