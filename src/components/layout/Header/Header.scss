@@ -123,9 +123,9 @@ header {
         position: relative;
 
         & > button {
+          @include App.button;
           background-color: App.$white;
           color: App.$black;
-          @include App.button;
         }
       }
     }

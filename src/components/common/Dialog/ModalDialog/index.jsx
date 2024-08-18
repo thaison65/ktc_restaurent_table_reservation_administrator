@@ -1,7 +1,9 @@
 import { closeSVGIcon } from '~/assets/icons';
 import './ModalDialog.scss';
 
-function ModelDialog({ show, onClose, children }) {
+function ModelDialog({ ...props }) {
+  const { show, onClose, children, title } = props;
+
   if (!show) {
     return null;
   }
@@ -18,7 +20,7 @@ function ModelDialog({ show, onClose, children }) {
         <div className='content-modal'>
           <div className='header-modal'>
             <div className='empty'></div>
-            <h2>Thêm vị trí bàn</h2>
+            <h2>{title}</h2>
             <button className='icon-close' onClick={onClose}>
               <img src={closeSVGIcon} alt='Icon Element' />
             </button>

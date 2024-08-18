@@ -10,21 +10,6 @@ div.header-content {
     display: flex;
     align-items: center;
     gap: 15px;
-
-    #select-area {
-      min-width: 120px;
-      border-radius: 8px;
-      font-size: 16px;
-      padding: 12px 24px;
-      color: App.$black;
-      border: 1px solid App.$border-gray;
-      outline: none;
-      @include App.btn-border-box-shadow;
-
-      option.item-area {
-        border-radius: 8px;
-      }
-    }
   }
 
   #container-status {
@@ -67,6 +52,7 @@ div.header-content {
   div.container-balcony {
     width: 160px;
     @include App.bg-status-inactive;
+    background-color: App.$primary;
     display: flex;
     justify-content: center;
     align-items: center;

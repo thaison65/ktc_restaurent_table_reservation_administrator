@@ -4,7 +4,7 @@ import './Table.scss';
 import { Button } from '../Button';
 
 function Table({ ...props }) {
-  const { titles, datas } = props;
+  const { titles, datas, handleClickBtnUpdate } = props;
 
   return (
     <>
@@ -25,14 +25,14 @@ function Table({ ...props }) {
                   return <td key={index}>{value}</td>;
                 })}
                 <td className='container-edit'>
-                  <Button icon={settingEditSVGIcon} title={'Chỉnh sửa'} classes={'btn-update button'} />
+                  <Button icon={settingEditSVGIcon} title={'Chỉnh sửa'} classes={'btn-update button'} onClick={() => handleClickBtnUpdate(data)} />
                   <Button icon={deleteSVGIcon} title={'Xóa bàn'} classes={'btn-delete button'} />
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td>{'Dữ liệu không có'}</td>
+              <td colSpan={titles.length + 1}>{'Dữ liệu không có'}</td>
             </tr>
           )}
         </tbody>

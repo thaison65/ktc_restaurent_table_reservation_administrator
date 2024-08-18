@@ -1,12 +1,12 @@
 import './Button.scss';
 
 function Button({ ...props }) {
-  const { icon, title, classes, onClick } = props;
+  const { type = 'button', icon, title, classes, onClick } = props;
 
   return (
     <>
-      <button className={classes} onClick={onClick}>
-        <img src={icon} alt='Icon Button' /> {title}
+      <button type={type} className={classes} onClick={onClick}>
+        {icon && <img src={icon} alt='Icon Button' />} {title}
       </button>
     </>
   );

@@ -22,6 +22,16 @@ table {
         max-width: 100px;
         padding: 12px 10px;
         overflow: hidden;
+
+        .btn-update {
+          color: App.$primary;
+          border: 1px solid App.$primary;
+        }
+
+        .btn-delete {
+          color: App.$red;
+          border: 1px solid App.$red;
+        }
       }
 
       td.container-edit {

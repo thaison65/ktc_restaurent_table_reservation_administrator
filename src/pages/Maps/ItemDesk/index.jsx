@@ -1,14 +1,14 @@
 import './ItemDesk.scss';
 function ItemDesk({ ...props }) {
-  const { id, title, status } = props;
+  const { id, title } = props;
 
   const handleClick = () => {
-    console.log(id, title, status);
+    console.log(id, title);
   };
 
   return (
     <>
-      <div className={`item-desk ${status === '1' ? 'desk-active' : ''} `} onClick={handleClick}>
+      <div className={`item-desk `} onClick={handleClick}>
         <span>{title}</span>
       </div>
     </>

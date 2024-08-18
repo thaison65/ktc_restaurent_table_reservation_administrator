@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import './Maps.scss';
 import ItemDesk from './ItemDesk';
+import SelectArea from '~/components/common/SelectItem';
 
-const areas = [
+const categories = [
   {
     id: 1,
     title: 'Sân vườn',
@@ -44,33 +45,20 @@ const tables = [
 ];
 
 function MapsPage() {
-  const [select, setSelect] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
 
   const handleSelect = (event) => {
     console.log('Select:', event.target.value);
-    setSelect(event.target.value);
-    console.log(select);
+    setSelectedArea(event.target.value);
+    console.log(selectedArea);
   };
+
   return (
     <>
       <div className='header-content'>
-        <div id='container-area'>
-          <label htmlFor=''>Chọn khu vực:</label>
-          <select name='' id='select-area' onChange={handleSelect}>
-            <option className='item-area' value={'all'}>
-              Tất cả
-            </option>
-            {areas.map((value) => {
-              return (
-                <option key={value.id} className='item-area' value={value.id}>
-                  {value.title}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+        <SelectArea categories={categories} onSelect={handleSelect} selectedValue={selectedArea} />
 
-        <section id='container-status'>
+        {/* <section id='container-status'>
           <div className='note-status'>
             <div className='ellipse active'></div>
             <span>Đang được sử dụng</span>
@@ -79,7 +67,7 @@ function MapsPage() {
             <div className='ellipse'></div>
             <span>Chưa được sử dụng</span>
           </div>
-        </section>
+        </section> */}
       </div>
 
       <div id='content-maps'>
