@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { searchSVGIcon, bellSVGIcon, elementSVGIcon, dateSVGIcon } from '~/assets/icons';
 import './Header.scss';
+import useDebounce from '~/hooks/use-debounce';
 
-function Header({ ...props }) {
-  const { title } = props;
+function Header({ title }) {
+  const [search, setSearch] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [search, setSearch] = useState();
-  // const [startDate, setStartDate] = useState(new Date());
+  const debounce = useDebounce({ value: search, delay: 500 });
 
-  const handleSearch = (event) => {
+  const handleSearch = useCallback((event) => {
     setSearch(event.target.value);
-    console.log('Search:', search);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (debounce) {
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.set('search', debounce);
+        return newParams;
+      });
+    } else {
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.delete('search');
+        return newParams;
+      });
+    }
+  }, [debounce]);
 
   return (
     <header>
@@ -20,7 +37,7 @@ function Header({ ...props }) {
         <h2>{title}</h2>
         <div className='action-user'>
           <div className='container-icon'>
-            <img src={bellSVGIcon} alt='' />
+            <img src={bellSVGIcon} alt='Bell Icon' />
             <div className='badges'></div>
           </div>
           <div className='user-info'>
@@ -31,21 +48,21 @@ function Header({ ...props }) {
 
       <section id='event-page'>
         <div className='container-search'>
-          <input id='search' name='search' type='text' placeholder='Search...' onChange={handleSearch} />
-          <img src={searchSVGIcon} alt='Icon search' />
+          <input id='search' name='search' type='text' placeholder='Search...' value={search} onChange={handleSearch} />
+          <img src={searchSVGIcon} alt='Search Icon' />
         </div>
 
         <div id='filter-desk'>
           <div className='dropdown dropdown-status'>
             <button className='btn-dropdown'>
-              <img src={elementSVGIcon} alt='Icon Element' /> Trạng thái
+              <img src={elementSVGIcon} alt='Status Icon' /> Trạng thái
             </button>
             <div className='dropdown-content'></div>
           </div>
 
           <div className='dropdown dropdown-date'>
             <button className='btn-dropdown'>
-              <img src={dateSVGIcon} alt='Icon Element' />
+              <img src={dateSVGIcon} alt='Date Icon' />
               Chọn ngày
             </button>
             <div className='dropdown-content'></div>

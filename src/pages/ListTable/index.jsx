@@ -3,7 +3,9 @@ import { addSVGIcon } from '~/assets/icons';
 import './ListTable.scss';
 import Table from '~/components/common/Table';
 import { Button } from '~/components/common/Button';
-// import { ModalDialog } from '~/components/common/Dialog';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { ModalDialog } from '~/components/common/Dialog';
 
 const titles = ['STT', 'Hình ảnh', 'ID', 'Tên bàn', 'Trạng Thái', 'Khu vực', 'Mô tả'];
 
@@ -30,15 +32,53 @@ const danhSachBan = [
   { STT: 20, image: 'hinh_anh_20.jpg', id: 'Ban20', name: 'Bàn số 20', status: 'Có người', area: 'Phòng VIP', description: 'Bàn VIP 4' },
 ];
 function ListTablePage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [datas, setDatas] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  
+  useEffect(() => {
+    if (searchParams.get('search')) {
+      const searchText = searchParams.get('search').toLowerCase().trim();
+
+      const filteredData = danhSachBan.filter((item) => {
+        return item.tenKhachHang.toLowerCase().includes(searchText) || item.soDienThoai.toLowerCase().includes(searchText);
+      });
+
+      setDatas(filteredData);
+    } else {
+      setDatas(danhSachBan);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    // Chỉ cập nhật setSearchParams nếu nó chưa có giá trị 'search'
+    if (!searchParams.has('search')) {
+      setSearchParams({ search: searchParams.get('search') ?? '' }, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
   return (
     <>
-      {/* <ModalDialog /> */}
-
       <div className=' header-content-table'>
-        <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} />
+        <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} onClick={handleOpenModal} />
       </div>
 
-      <Table titles={titles} datas={danhSachBan} />
+      <Table titles={titles} datas={datas} />
+
+      <ModalDialog show={showModal} onClose={handleCloseModal}>
+        <h2>This is a Modal</h2>
+        <p>Content inside the modal goes here.</p>
+        <button onClick={handleCloseModal}>Close</button>
+      </ModalDialog>
     </>
   );
 }
