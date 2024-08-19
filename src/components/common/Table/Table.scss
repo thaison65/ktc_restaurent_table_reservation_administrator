@@ -1,49 +1,56 @@
 @use '../../../App.scss';
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto;
+#container-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 
-  thead {
-    text-align: center;
-    padding: 10px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
 
-    th.action-table {
-      width: 300px;
-    }
-  }
+    thead {
+      text-align: center;
+      padding: 10px;
 
-  tbody {
-    text-align: center;
-
-    tr {
-      td {
-        max-width: 100px;
-        padding: 12px 10px;
-        overflow: hidden;
-
-        .btn-update {
-          color: App.$primary;
-          border: 1px solid App.$primary;
-        }
-
-        .btn-delete {
-          color: App.$red;
-          border: 1px solid App.$red;
-        }
-      }
-
-      td.container-edit {
-        min-width: 300px;
-        display: flex;
-        gap: 10px;
-        justify-content: center;
+      th.action-table {
+        width: 300px;
       }
     }
 
-    tr:nth-child(even) {
-      background-color: App.$light-gray;
+    tbody {
+      text-align: center;
+
+      tr {
+        td {
+          max-width: 100px;
+          padding: 12px 10px;
+          overflow: hidden;
+
+          .btn-update {
+            color: App.$primary;
+            border: 1px solid App.$primary;
+          }
+
+          .btn-delete {
+            color: App.$red;
+            border: 1px solid App.$red;
+          }
+        }
+
+        td.container-edit {
+          min-width: 300px;
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+        }
+      }
+
+      tr:nth-child(even) {
+        background-color: App.$light-gray;
+      }
     }
   }
 }

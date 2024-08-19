@@ -1,0 +1,23 @@
+@use '../../../../App.scss';
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  margin-right: 12px;
+
+  gap: 4px;
+  button {
+    padding: 8px 20px;
+    cursor: pointer;
+    border: none;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+  button.active {
+    background-color: App.$primary;
+    color: App.$white;
+  }
+}

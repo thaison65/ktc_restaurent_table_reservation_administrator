@@ -4,6 +4,8 @@ import { ModalDialog } from '~/components/common/Dialog';
 import Table from '~/components/common/Table';
 import ChildrenModalOrder from './ChildrenModal';
 
+import './Order.scss';
+
 const titles = ['Mã đơn đặt', 'Tên khách hàng', 'Số điện thoại', 'Email', 'Khu vực', 'Trạng Thái', 'Ngày đặt bàn'];
 
 const danhSachDon = [
@@ -196,11 +198,6 @@ function OrderPage() {
   const [itemUpdated, setItemUpdated] = useState({});
   const [showModal, setShowModal] = useState(false);
 
-  // const handleOpenModal = () => {
-  //   setItemUpdated({});
-  //   setShowModal(true);
-  // };
-
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -231,13 +228,13 @@ function OrderPage() {
     setSearchParams({ search: searchParams.get('search') ?? '' });
   }, [searchParams, setSearchParams]);
   return (
-    <>
-      <Table titles={titles} datas={datas} handleClickBtnUpdate={handleClickBtnUpdate} />
+    <div id='content-page-order'>
+      <Table titles={titles} datas={datas} handleClickBtnUpdate={handleClickBtnUpdate} recordsPerPage={8} titleUpdate={'Chi tiết đơn đặt'} />
 
-      <ModalDialog show={showModal} onClose={handleCloseModal} title={'Thêm bàn'}>
+      <ModalDialog show={showModal} onClose={handleCloseModal} title={'Chi tiết đơn đặt bàn'}>
         <ChildrenModalOrder onClose={handleCloseModal} item={itemUpdated} />
       </ModalDialog>
-    </>
+    </div>
   );
 }
 

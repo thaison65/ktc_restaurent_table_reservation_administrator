@@ -1,7 +1,8 @@
 import ItemSidebar from '~/components/layout/SideBar/ItemSidebar';
-import './SideBar.scss';
 import { ListItemSideBar } from './routes';
 import { useLocation } from 'react-router-dom';
+
+import './SideBar.scss';
 
 function SideBar() {
   const location = useLocation();
