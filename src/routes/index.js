@@ -1,7 +1,7 @@
 import ListTablePage from '~/pages/ListTable';
 import MapsPage from '~/pages/Maps';
 import OrderPage from '~/pages/Order';
-import SettingPage from '~/pages/Setting';
+import Category from '~/pages/Category';
 
 const privateRouter = [
   {
@@ -20,9 +20,9 @@ const privateRouter = [
     name: 'Danh sách đơn đặt bàn',
   },
   {
-    path: '/KTC_FE_MINI_PROJECT/setting',
-    component: SettingPage,
-    name: 'Cài đặt',
+    path: '/KTC_FE_MINI_PROJECT/category',
+    component: Category,
+    name: 'Khu vực trong nhà hàng',
   },
 ];
 

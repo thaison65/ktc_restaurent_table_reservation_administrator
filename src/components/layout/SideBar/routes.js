@@ -35,12 +35,12 @@ const ListItemSideBar = [
     alt: 'Icon Order',
   },
   {
-    id: 'setting',
-    title: 'Cài đặt',
-    path: '/KTC_FE_MINI_PROJECT/setting',
+    id: 'category',
+    title: 'Khu vực',
+    path: '/KTC_FE_MINI_PROJECT/category',
     icon: settingSVGIcon,
     iconFocus: settingFocusSVGIcon,
-    alt: 'Icon Setting',
+    alt: 'Icon Category',
   },
 ];
 

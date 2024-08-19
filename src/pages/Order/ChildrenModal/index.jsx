@@ -1,8 +1,10 @@
-import { Button } from '~/components/common/Button';
-import './ChildrenModal.scss';
 import { useEffect, useState } from 'react';
+
+import Button from '~/components/common/Button';
 import InputField from '~/components/common/InputField';
 import SelectArea from '~/components/common/SelectItem';
+
+import './ChildrenModal.scss';
 
 const categories = [
   {
@@ -23,6 +25,29 @@ const categories = [
   },
 ];
 
+const status = [
+  {
+    id: 0,
+    title: 'Không nhận',
+  },
+  {
+    id: 1,
+    title: 'Nhận',
+  },
+  {
+    id: 2,
+    title: 'Chờ',
+  },
+  {
+    id: 3,
+    title: 'Hủy',
+  },
+  {
+    id: 4,
+    title: 'Hoàn thành',
+  },
+];
+
 function ChildrenModalOrder({ ...props }) {
   const { onClose, item = {}, action = 'add' } = props;
 
@@ -35,11 +60,19 @@ function ChildrenModalOrder({ ...props }) {
   const [date, setDate] = useState('');
   const [errors, setErrors] = useState({ customer: '', phone: '', email: '', errors: '' });
 
-  const handleSelect = (event) => {
+  const handleSelectSelect = (event) => {
     console.log('Select:', event.target.value);
     setSelectedArea(event.target.value);
     console.log(selectedArea);
   };
+
+  const handleSelectStatus = (event) => {
+    console.log('Select:', event.target.value);
+    setSelectedStatus(event.target.value);
+    console.log(selectedStatus);
+  };
+
+  console.log(action);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,8 +94,6 @@ function ChildrenModalOrder({ ...props }) {
     formData.append('customer', customer);
     formData.append('selectedArea', selectedArea);
     formData.append('description', date);
-
-    console.log(action);
 
     console.log('Submitting form with data:', { id, customer, selectedArea, description: date });
 
@@ -100,6 +131,7 @@ function ChildrenModalOrder({ ...props }) {
           onChange={(e) => setCustomer(e.target.value)}
           error={errors.customer}
           readOnly
+          required
         />
 
         <InputField
@@ -110,6 +142,7 @@ function ChildrenModalOrder({ ...props }) {
           onChange={(e) => setPhone(e.target.value)}
           error={errors.phone}
           readOnly
+          required
         />
 
         <InputField
@@ -120,10 +153,13 @@ function ChildrenModalOrder({ ...props }) {
           onChange={(e) => setEmail(e.target.value)}
           error={errors.email}
           readOnly
+          required
         />
 
-        <SelectArea categories={categories} onSelect={handleSelect} selectedValue={selectedArea} />
-        <SelectArea categories={categories} onSelect={handleSelect} selectedValue={selectedArea} />
+        <div className='container-select'>
+          <SelectArea title={'Chọn khu vực:'} options={categories} onSelect={handleSelectSelect} selectedValue={selectedArea} />
+          <SelectArea title={'Trạng thái:'} options={status} onSelect={handleSelectStatus} selectedValue={selectedStatus} />
+        </div>
 
         <InputField
           id='date'
@@ -133,6 +169,7 @@ function ChildrenModalOrder({ ...props }) {
           onChange={(e) => setDate(e.target.value)}
           error={errors.date}
           readOnly
+          required
         />
 
         <div className='container-btn'>

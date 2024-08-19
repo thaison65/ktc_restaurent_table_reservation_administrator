@@ -1,9 +1,11 @@
-import { Button } from '~/components/common/Button';
-import './ChildrenModal.scss';
 import { useEffect, useState } from 'react';
+
 import InputField from '~/components/common/InputField';
 import FileInput from '~/components/common/InputField/FileInput';
+import Button from '~/components/common/Button';
 import SelectArea from '~/components/common/SelectItem';
+
+import './ChildrenModal.scss';
 
 const categories = [
   {
@@ -26,8 +28,6 @@ const categories = [
 
 function ChildrenModal({ ...props }) {
   const { onClose, item = {} } = props;
-
-  console.log(item);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [id, setID] = useState('');
@@ -107,7 +107,7 @@ function ChildrenModal({ ...props }) {
           required
         />
 
-        <SelectArea categories={categories} onSelect={handleSelect} selectedValue={selectedArea} />
+        <SelectArea title={'Chọn khu vực'} options={categories} onSelect={handleSelect} selectedValue={selectedArea} />
 
         <InputField
           id='description'

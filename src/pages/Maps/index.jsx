@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import './Maps.scss';
 import ItemDesk from './ItemDesk';
 import SelectArea from '~/components/common/SelectItem';
+
+import './Maps.scss';
 
 const categories = [
   {
@@ -56,7 +57,7 @@ function MapsPage() {
   return (
     <>
       <div className='header-content'>
-        <SelectArea categories={categories} onSelect={handleSelect} selectedValue={selectedArea} />
+        <SelectArea options={categories} onSelect={handleSelect} selectedValue={selectedArea} title={'Chọn khu vực:'} />
 
         {/* <section id='container-status'>
           <div className='note-status'>

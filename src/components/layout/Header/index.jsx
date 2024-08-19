@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { searchSVGIcon, bellSVGIcon, elementSVGIcon, dateSVGIcon } from '~/assets/icons';
-import './Header.scss';
 import useDebounce from '~/hooks/use-debounce';
+
+import './Header.scss';
 
 function Header({ title }) {
   const [search, setSearch] = useState('');

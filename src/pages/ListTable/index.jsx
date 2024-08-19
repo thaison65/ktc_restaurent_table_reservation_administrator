@@ -1,12 +1,14 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+import Table from '~/components/common/Table';
+import { ModalDialog } from '~/components/common/Dialog';
+import ChildrenModal from './ChildrenModal';
+
 import { addSVGIcon } from '~/assets/icons';
 
 import './ListTable.scss';
-import Table from '~/components/common/Table';
-import { Button } from '~/components/common/Button';
-import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { ModalDialog } from '~/components/common/Dialog';
-import ChildrenModal from './ChildrenModal';
+import Button from '~/components/common/Button';
 
 const titles = ['STT', 'Hình ảnh', 'ID', 'Tên bàn', 'Trạng Thái', 'Khu vực', 'Mô tả'];
 
@@ -49,7 +51,6 @@ function ListTablePage() {
   };
 
   const handleClickBtnUpdate = (data) => {
-    console.log(data);
     setItemUpdated(data);
     setShowModal(true);
   };
@@ -81,7 +82,7 @@ function ListTablePage() {
         <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} onClick={handleOpenModal} />
       </div>
 
-      <Table titles={titles} datas={datas} handleClickBtnUpdate={handleClickBtnUpdate} />
+      <Table titles={titles} datas={datas} handleClickBtnUpdate={handleClickBtnUpdate} recordsPerPage={7} titleDelete={'Xóa bàn'} />
 
       <ModalDialog show={showModal} onClose={handleCloseModal} title={'Thêm bàn'}>
         <ChildrenModal onClose={handleCloseModal} item={itemUpdated} />
