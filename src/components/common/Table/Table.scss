@@ -25,9 +25,76 @@
 
       tr {
         td {
-          max-width: 100px;
+          max-width: 150px;
           padding: 12px 10px;
           overflow: hidden;
+
+          section.container-status-booking {
+            display: flex;
+            margin-left: 12px;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 4px;
+
+            & > span {
+              white-space: nowrap;
+              text-align: end;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            & > .badge {
+              min-width: 16px;
+              height: 16px;
+              border-radius: 50%;
+            }
+
+            & > .badge-inactive {
+              background-color: App.$gray;
+            }
+            & > .badge-success {
+              background-color: App.$success;
+            }
+            & > .badge-warning {
+              background-color: App.$warning;
+            }
+            & > .badge-danger {
+              background-color: App.$danger;
+            }
+            & > .badge-primary {
+              background-color: App.$primary;
+            }
+          }
+
+          div.container-loader {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+
+            .loader {
+              border: 4px solid App.$gray;
+              border-top: 4px solid App.$primary;
+              border-radius: 50%;
+              width: 24px;
+              height: 24px;
+              animation: spin 2s linear infinite;
+            }
+
+            @keyframes spin {
+              0% {
+                transform: rotate(0deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+
+            & > span {
+              font-size: 18px;
+              font-weight: 500;
+            }
+          }
 
           .btn-update {
             color: App.$primary;
@@ -35,8 +102,8 @@
           }
 
           .btn-delete {
-            color: App.$red;
-            border: 1px solid App.$red;
+            color: App.$danger;
+            border: 1px solid App.$danger;
           }
         }
 

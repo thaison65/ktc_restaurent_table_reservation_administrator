@@ -24,6 +24,10 @@ import settingEditSVGIcon from './settingEditIcon.svg';
 // Icons for Modal
 import closeSVGIcon from './closeIcon.svg';
 
+// Icon for Alert
+import checkedSVGIcon from './checkedIcon.svg';
+import errorSVGIcon from './errorIcon.svg';
+
 export {
   categorySVGIcon,
   taskSVGIcon,
@@ -42,4 +46,6 @@ export {
   deleteSVGIcon,
   settingEditSVGIcon,
   closeSVGIcon,
+  checkedSVGIcon,
+  errorSVGIcon,
 };

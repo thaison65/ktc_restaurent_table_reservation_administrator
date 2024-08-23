@@ -20,7 +20,6 @@
   background-color: white;
 }
 
-
 .input-container {
   margin-bottom: 20px;
 }
@@ -45,15 +44,15 @@
 }
 
 .input-error {
-  color: red;
+  color: App.$danger;
   font-size: 14px;
   margin-top: 5px;
 }
 
 .has-error .input {
-  border-color: red;
+  border-color: App.$danger;
 }
 
 .required {
-  color: red;
+  color: App.$danger;
 }

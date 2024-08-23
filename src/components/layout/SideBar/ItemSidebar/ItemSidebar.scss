@@ -4,13 +4,13 @@ li.item-sidebar {
   list-style: none;
   border: 1px solid App.$primary;
   border-radius: 10px;
-  padding: 10px 20px;
 
   & > .link-item {
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 12px;
+    padding: 10px 20px;
     text-decoration: none;
     color: App.$white;
 

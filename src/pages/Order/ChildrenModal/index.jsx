@@ -1,70 +1,57 @@
 import { useEffect, useState } from 'react';
 
 import Button from '~/components/common/Button';
-import InputField from '~/components/common/InputField';
 import SelectArea from '~/components/common/SelectItem';
+import Alert from '~/components/common/Dialog/Alert';
 
 import './ChildrenModal.scss';
-
-const categories = [
-  {
-    id: 1,
-    title: 'Sân vườn',
-  },
-  {
-    id: 2,
-    title: 'Quầy bar',
-  },
-  {
-    id: 3,
-    title: 'Trong sảnh',
-  },
-  {
-    id: 4,
-    title: 'Cạnh biển',
-  },
-];
+import { getBooking, putBookingStatus } from '~/services';
 
 const status = [
   {
     id: 0,
-    title: 'Không nhận',
+    title: 'Không nhận đơn đặt bàn',
+    color: 'gray',
   },
   {
     id: 1,
-    title: 'Nhận',
+    title: 'Chấp thuận đơn đặt bàn',
+    color: 'success',
   },
   {
     id: 2,
-    title: 'Chờ',
+    title: 'Chờ xác nhận',
+    color: 'warning',
   },
   {
     id: 3,
-    title: 'Hủy',
+    title: 'Đơn đặt bàn bị hủy',
+    color: 'danger',
   },
   {
     id: 4,
-    title: 'Hoàn thành',
+    title: 'Đơn đã hoàn thành',
+    color: 'primay',
   },
 ];
 
 function ChildrenModalOrder({ ...props }) {
-  const { onClose, item = {}, action = 'add' } = props;
+  const { onClose, item = 1, handleTriggerReload } = props;
 
   const [id, setID] = useState('');
-  const [customer, setCustomer] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [selectedArea, setSelectedArea] = useState('');
+  const [booking, setBooking] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    idTable: '',
+    nameTable: '',
+    nameCategory: '',
+    note: '',
+    booking_date: '',
+  });
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [date, setDate] = useState('');
-  const [errors, setErrors] = useState({ customer: '', phone: '', email: '', errors: '' });
 
-  const handleSelectSelect = (event) => {
-    console.log('Select:', event.target.value);
-    setSelectedArea(event.target.value);
-    console.log(selectedArea);
-  };
+  const [showAlert, setShowAlert] = useState({ show: false, onClose: null, title: '', message: '', status: 'success' });
 
   const handleSelectStatus = (event) => {
     console.log('Select:', event.target.value);
@@ -72,111 +59,124 @@ function ChildrenModalOrder({ ...props }) {
     console.log(selectedStatus);
   };
 
-  console.log(action);
+  const handleCloseAlert = () => {
+    setShowAlert({ show: false });
+    onClose();
+  };
 
-  const handleSubmit = (e) => {
+  const handleCloseError = () => {
+    setShowAlert({ show: false });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = {};
-
-    if (customer.trim() === '') {
-      newErrors.name = 'Name is required';
+    try {
+      await putBookingStatus(id, selectedStatus);
+      handleTriggerReload();
+      setShowAlert({
+        show: true,
+        onClose: handleCloseAlert,
+        title: 'Cập nhật trạng thái',
+        message: 'Thông tin trạng thái cập nhật thành công',
+        status: 'success',
+      });
+    } catch (e) {
+      console.error(e);
+      setShowAlert({
+        show: true,
+        onClose: handleCloseError,
+        title: 'Lỗi khi cập nhật',
+        message: 'Cập nhật trạng thái không thành công',
+        status: 'error',
+      });
     }
-    if (date.trim() === '') {
-      newErrors.description = 'Description is required';
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('customer', customer);
-    formData.append('selectedArea', selectedArea);
-    formData.append('description', date);
-
-    console.log('Submitting form with data:', { id, customer, selectedArea, description: date });
-
-    // Clear the form after submission (optional)
-    setID('');
-    setCustomer('');
-    setSelectedArea('');
-    setDate('');
-    setErrors({ name: '', description: '', errors: '' });
   };
 
   useEffect(() => {
-    if (item) {
-      setID(item.id || '');
-      setCustomer(item.customer || '');
-      setPhone(item.phone || '');
-      setEmail(item.email || '');
-      setSelectedArea(item.area || '');
-      setSelectedStatus(item.status || '');
-      setDate(item.dateBooking || '');
-      // Set file if item has one
-      // setSelectedFile(item.file || null);
-    }
+    if (!item) return;
+
+    const fetchData = async () => {
+      try {
+        // Fetch booking data
+        const bookingResponse = await getBooking(item);
+
+        setID(bookingResponse.id);
+        setBooking({
+          name: bookingResponse.name,
+          phone: bookingResponse.phone,
+          email: bookingResponse.email,
+          idTable: bookingResponse.views.id,
+          nameTable: bookingResponse.views.name,
+          nameCategory: bookingResponse.views.category.name,
+          note: bookingResponse.addition_note,
+          booking_date: bookingResponse.booking_date,
+        });
+        setSelectedStatus(bookingResponse.booking_status);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, [item]);
 
   return (
     <>
-      <form className='form' onSubmit={handleSubmit}>
-        <InputField id='id' name='id' label='Mã đơn đặt:' value={id} onChange={(e) => setID(e.target.value)} readOnly />
-        <InputField
-          id='customer'
-          name='customer'
-          label='Tên khách hàng: '
-          value={customer}
-          onChange={(e) => setCustomer(e.target.value)}
-          error={errors.customer}
-          readOnly
-          required
-        />
+      <form id='form-order' onSubmit={handleSubmit}>
+        <p id='id-booking'>
+          Mã đơn đặt: <span>{id}</span>
+        </p>
+        <section id='content-booking-detail'>
+          <section className='container-info-customer'>
+            <h3>Thông tin khách hàng</h3>
+            <p id='name-customer'>
+              Tên khách hàng: <span>{booking.name}</span>
+            </p>
+            <p id='phone-customer'>
+              Số điện thoại: <span>{booking.phone}</span>
+            </p>
+            <p id='email-customer'>
+              Email: <span>{booking.email}</span>
+            </p>
+            <p id='note'>
+              Ghi chú: <span>{booking.note}</span>
+            </p>
+          </section>
 
-        <InputField
-          id='phone'
-          name='phone'
-          label='Số điện thoại:  '
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          error={errors.phone}
-          readOnly
-          required
-        />
+          <section className='container-desk'>
+            <h3>Thông tin bàn được đặt</h3>
+            <p id='id-table'>
+              ID bàn: <span>{booking.idTable}</span>
+            </p>
+            <p id='name-table'>
+              Tên bàn: <span>{booking.nameTable}</span>
+            </p>
+            <p id='name-category'>
+              Loại bàn: <span>{booking.nameCategory}</span>
+            </p>
+          </section>
 
-        <InputField
-          id='email'
-          name='email'
-          label='Địa chỉ Email:  '
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={errors.email}
-          readOnly
-          required
-        />
+          <section className='container-select'>
+            <h3>Thông tin đơn đặt</h3>
 
-        <div className='container-select'>
-          <SelectArea title={'Chọn khu vực:'} options={categories} onSelect={handleSelectSelect} selectedValue={selectedArea} />
-          <SelectArea title={'Trạng thái:'} options={status} onSelect={handleSelectStatus} selectedValue={selectedStatus} />
-        </div>
+            <p id='booking-date'>
+              Ngày đặt: <span>{booking.booking_date}</span>
+            </p>
+            <SelectArea title={'Trạng thái:'} options={status} onSelect={handleSelectStatus} selectedValue={selectedStatus} />
+          </section>
+        </section>
 
-        <InputField
-          id='date'
-          name='date'
-          label='Ngày đặt bàn: '
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          error={errors.date}
-          readOnly
-          required
-        />
+        <p className='note'>
+          Thay đổi trạng thái đơn đặt bàn <span>*</span>
+        </p>
 
         <div className='container-btn'>
           <Button type='submit' title={'Xác nhận'} classes={'button btn-submit'} />
           <Button onClick={onClose} title={'Đóng'} classes={'button btn-close'} />
         </div>
       </form>
+
+      <Alert onClose={showAlert.onClose} show={showAlert.show} title={showAlert.title} message={showAlert.message} status={showAlert.status} />
     </>
   );
 }

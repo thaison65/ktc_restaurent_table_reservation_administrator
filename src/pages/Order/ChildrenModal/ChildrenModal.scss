@@ -1,6 +1,85 @@
 @use '../../../App.scss';
 
-div.container-select {
+form#form-order {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 20px;
+
+  h3 {
+    font-size: 20px;
+    margin: 8px 0;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba($color: App.$black, $alpha: 0.7);
+    margin-left: 8px;
+
+    & > span {
+      color: App.$black;
+    }
+  }
+
+  p#id-booking {
+    text-align: center;
+    & > span {
+      color: App.$black;
+      font-weight: 600;
+    }
+  }
+
+  section#content-booking-detail {
+    display: grid;
+    grid-template-areas:
+      'info info'
+      'desk select';
+    grid-template-columns: repeat(2, minmax(1fr));
+    gap: 12px;
+
+    & > section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    section.container-info-customer {
+      grid-area: info;
+    }
+
+    section.container-desk {
+      grid-area: desk;
+    }
+
+    section.container-select {
+      grid-area: select;
+    }
+  }
+
+  #id-booking,
+  #id-booking > span {
+    color: App.$primary;
+  }
+
+  p.note {
+    font-size: 14px;
+    color: rgba($color: App.$black, $alpha: 0.7);
+    text-align: end;
+
+    & > span {
+      color: App.$danger;
+    }
+  }
+
+  .container-btn {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+
+    button.btn-submit {
+      border: 1px solid App.$primary;
+      color: App.$primary;
+    }
+  }
 }

@@ -1,0 +1,56 @@
+@use '../../../App.scss';
+
+#container-date {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .react-datepicker {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  .react-datepicker__header {
+    background-color: App.$primary;
+    color: App.$white;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+  }
+  .react-datepicker__day {
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .react-datepicker__day--selected {
+    background-color: App.$primary;
+    color: App.$white;
+  }
+  .react-datepicker__day--today {
+    border: 1px solid App.$primary;
+    font-weight: bold;
+  }
+  .react-datepicker__input-container {
+    input {
+      padding: 12px 24px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
