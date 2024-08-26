@@ -5,10 +5,9 @@ import { searchSVGIcon, bellSVGIcon } from '~/assets/icons';
 import useDebounce from '~/hooks/use-debounce';
 
 // import SelectArea from '~/components/common/SelectItem';
+import DatePickerComponent from '~/components/common/DatePicker';
 
 import './Header.scss';
-
-// import DatePickerComponent from '~/components/common/DatePicker';
 
 // const categories = [
 //   {
@@ -34,7 +33,7 @@ function Header({ title }) {
 
   const [search, setSearch] = useState('');
   // const [selectedArea, setSelectedArea] = useState('');
-  // const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState();
 
   const debounce = useDebounce({ value: search, delay: 500 });
 
@@ -44,25 +43,29 @@ function Header({ title }) {
   //   console.log(selectedArea);
   // };
 
-  // const handleChangeDate = (event) => {
-  //   setStartDate(event);
-  //   console.log(startDate);
-  // };
+  const handleChangeDate = (event) => {
+    setStartDate(event);
+    console.log(startDate);
+  };
 
   const handleSearch = useCallback((event) => {
     setSearch(event.target.value);
   }, []);
 
   useEffect(() => {
-    if (debounce) {
+    if (debounce || startDate) {
       setSearchParams((prevParams) => {
         const newParams = new URLSearchParams(prevParams);
+        if (startDate && title === 'Danh sách đơn đặt bàn') {
+          console.log(startDate);
+
+          const formattedDate = startDate.toLocaleDateString('en-CA'); // Outputs in 'YYYY-MM-DD' format
+          newParams.set('date', formattedDate);
+        }
         if (debounce) {
           newParams.set('search', debounce);
         }
-        // if (startDate && title === 'Danh sách đơn đặt bàn') {
-        //   newParams.set('date', startDate.toISOString().slice(0, 10));
-        // }
+
         return newParams;
       });
     } else {
@@ -73,7 +76,7 @@ function Header({ title }) {
         return newParams;
       });
     }
-  }, [debounce, title]);
+  }, [debounce, startDate, title]);
 
   return (
     <header>
@@ -96,13 +99,22 @@ function Header({ title }) {
           <img src={searchSVGIcon} alt='Search Icon' />
         </div>
 
-        <div id='filter-desk'>
-          {/* {title === 'Sơ đồ vị trí' || title === 'Khu vực trong nhà hàng' ? null : (
+        {title === 'Danh sách đơn đặt bàn' ? (
+          <div id='filter-desk'>
+            {/* {title === 'Sơ đồ vị trí' || title === 'Khu vực trong nhà hàng' ? null : (
             <SelectArea title={'Khu vực:'} options={categories} onSelect={handleSelect} selectedValue={selectedArea} />
           )} */}
 
-          {/* {title === 'Danh sách đơn đặt bàn' ? <DatePickerComponent startDate={startDate} handleChangeDate={handleChangeDate} /> : null} */}
-        </div>
+            <DatePickerComponent startDate={startDate} handleChangeDate={handleChangeDate} />
+            <button
+              className='button'
+              onClick={() => {
+                setStartDate(null);
+              }}>
+              Xóa ngày
+            </button>
+          </div>
+        ) : null}
       </section>
     </header>
   );

@@ -48,10 +48,21 @@ function OrderPage() {
           dateBooking: item.booking_date,
         }));
 
-        if (searchParams.get('search') || searchParams.get('date')) {
-          const searchText = searchParams.get('search').toLowerCase().trim();
+        const search = searchParams.get('search');
+        const date = searchParams.get('date');
 
-          const filteredData = tables.filter((item) => {
+        if (search || date) {
+          const searchText = search.toLowerCase().trim();
+
+          let filteredDatas = [...tables];
+
+          if (date) {
+            filteredDatas = tables.filter((item) => {
+              return item.dateBooking === date;
+            });
+          }
+
+          const filteredData = filteredDatas.filter((item) => {
             if (item.name.toLowerCase().includes(searchText) || item.phone.toLowerCase().includes(searchText)) {
               return true;
             }
