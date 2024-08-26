@@ -29,6 +29,13 @@
           padding: 12px 10px;
           overflow: hidden;
 
+          div.empty-image {
+            margin-left: 24px;
+            width: 150px;
+            height: 100px;
+            background-color: App.$gray;
+          }
+
           img.image-table {
             width: auto;
             height: 100px;
