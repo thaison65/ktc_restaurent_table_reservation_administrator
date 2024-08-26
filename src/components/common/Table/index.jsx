@@ -6,6 +6,7 @@ import PaginatedTable from './PaginatedTable';
 import Button from '../Button';
 
 import './Table.scss';
+import ConfirmationDialog from '../Dialog/ConfirmationDialog';
 
 const status = [
   {
@@ -36,9 +37,11 @@ const status = [
 ];
 
 function Table({ ...props }) {
-  const { titles, datas, handleClickBtnUpdate, recordsPerPage, titleUpdate = 'Chỉnh sửa', titleDelete, handleDelete } = props;
+  const { titles, datas, handleClickBtnUpdate, recordsPerPage, titleUpdate = 'Chỉnh sửa', titleDelete, handleDel } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [id, setId] = useState('');
 
   const totalPages = Math.ceil(datas.length / recordsPerPage);
 
@@ -46,6 +49,22 @@ function Table({ ...props }) {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleDelete = (id) => {
+    setId(id);
+    setIsDialogOpen(true);
+  };
+
+  const handleConfirm = () => {
+    handleDel(id);
+    console.log('Item deleted');
+    setIsDialogOpen(false);
+  };
+
+  const handleCancel = () => {
+    // Close the confirmation dialog without deleting
+    setIsDialogOpen(false);
   };
 
   return (
@@ -109,6 +128,7 @@ function Table({ ...props }) {
         </tbody>
       </table>
 
+      <ConfirmationDialog isOpen={isDialogOpen} message='Bạn có thực sự muốn xóa?' onConfirm={handleConfirm} onCancel={handleCancel} />
       <PaginatedTable currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );

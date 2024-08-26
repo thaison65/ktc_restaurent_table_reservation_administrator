@@ -49,13 +49,12 @@ function OrderPage() {
         }));
 
         if (searchParams.get('search') || searchParams.get('date')) {
-          console.log(searchParams.get('date'));
-
           const searchText = searchParams.get('search').toLowerCase().trim();
-          // const formattedDate = startDate instanceof Date ? startDate.toISOString().split('T')[0] : startDate;
 
           const filteredData = tables.filter((item) => {
-            return item.customer.toLowerCase().includes(searchText) || item.phone.toLowerCase().includes(searchText);
+            if (item.name.toLowerCase().includes(searchText) || item.phone.toLowerCase().includes(searchText)) {
+              return true;
+            }
           });
 
           setDatas(filteredData);

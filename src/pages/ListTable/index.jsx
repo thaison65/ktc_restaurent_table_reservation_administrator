@@ -127,7 +127,7 @@ function ListTablePage() {
         handleClickBtnUpdate={handleClickBtnUpdate}
         recordsPerPage={5}
         titleDelete={'Xóa bàn'}
-        handleDelete={handleDelete}
+        handleDel={handleDelete}
       />
 
       <ModalDialog show={showModal} onClose={handleCloseModal} title={'Thông tin bàn'}>
