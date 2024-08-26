@@ -60,7 +60,7 @@ function Header({ title }) {
         if (debounce) {
           newParams.set('search', debounce);
         }
-        if (startDate) {
+        if (startDate && title === 'Danh sách đơn đặt bàn') {
           newParams.set('date', startDate.toISOString().slice(0, 10));
         }
         return newParams;
@@ -73,7 +73,7 @@ function Header({ title }) {
         return newParams;
       });
     }
-  }, [debounce, startDate]);
+  }, [debounce, startDate, title]);
 
   return (
     <header>
@@ -97,7 +97,7 @@ function Header({ title }) {
         </div>
 
         <div id='filter-desk'>
-          {title === 'Sơ đồ vị trí' ? null : (
+          {title === 'Sơ đồ vị trí' || title === 'Khu vực trong nhà hàng' ? null : (
             <SelectArea title={'Khu vực:'} options={categories} onSelect={handleSelect} selectedValue={selectedArea} />
           )}
 

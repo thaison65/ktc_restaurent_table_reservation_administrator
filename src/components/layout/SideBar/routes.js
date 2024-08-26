@@ -1,8 +1,8 @@
 import {
   boxFocusSVGIcon,
   boxSVGIcon,
-  categoryFocusSVGIcon,
-  categorySVGIcon,
+  // categoryFocusSVGIcon,
+  // categorySVGIcon,
   settingFocusSVGIcon,
   settingSVGIcon,
   taskFocusSVGIcon,
@@ -10,18 +10,18 @@ import {
 } from '~/assets/icons';
 
 const ListItemSideBar = [
-  {
-    id: 'maps',
-    title: 'Sơ đồ',
-    path: '/KTC_FE_MINI_PROJECT',
-    icon: categorySVGIcon,
-    iconFocus: categoryFocusSVGIcon,
-    alt: 'Icon Categories',
-  },
+  // {
+  //   id: 'maps',
+  //   title: 'Sơ đồ',
+  //   path: '/KTC_FE_MINI_PROJECT',
+  //   icon: categorySVGIcon,
+  //   iconFocus: categoryFocusSVGIcon,
+  //   alt: 'Icon Categories',
+  // },
   {
     id: 'listtable',
     title: 'Bảng',
-    path: '/KTC_FE_MINI_PROJECT/list-table',
+    path: '/KTC_FE_MINI_PROJECT',
     icon: taskSVGIcon,
     iconFocus: taskFocusSVGIcon,
     alt: 'Icon Task Table',

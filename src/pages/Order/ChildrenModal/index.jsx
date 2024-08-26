@@ -6,6 +6,7 @@ import Alert from '~/components/common/Dialog/Alert';
 
 import './ChildrenModal.scss';
 import { getBooking, putBookingStatus } from '~/services';
+import Loading from '~/components/common/Dialog/Loading';
 
 const status = [
   {
@@ -51,6 +52,7 @@ function ChildrenModalOrder({ ...props }) {
   });
   const [selectedStatus, setSelectedStatus] = useState('');
 
+  const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({ show: false, onClose: null, title: '', message: '', status: 'success' });
 
   const handleSelectStatus = (event) => {
@@ -70,9 +72,12 @@ function ChildrenModalOrder({ ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await putBookingStatus(id, selectedStatus);
       handleTriggerReload();
+      setLoading(false);
+
       setShowAlert({
         show: true,
         onClose: handleCloseAlert,
@@ -82,6 +87,8 @@ function ChildrenModalOrder({ ...props }) {
       });
     } catch (e) {
       console.error(e);
+      setLoading(false);
+
       setShowAlert({
         show: true,
         onClose: handleCloseError,
@@ -170,10 +177,14 @@ function ChildrenModalOrder({ ...props }) {
           Thay đổi trạng thái đơn đặt bàn <span>*</span>
         </p>
 
-        <div className='container-btn'>
-          <Button type='submit' title={'Xác nhận'} classes={'button btn-submit'} />
-          <Button onClick={onClose} title={'Đóng'} classes={'button btn-close'} />
-        </div>
+        {loading ? (
+          <Loading showLoading={loading} />
+        ) : (
+          <div className='container-btn'>
+            <Button type='submit' title={'Xác nhận'} classes={'button btn-submit'} />
+            <Button onClick={onClose} title={'Đóng'} classes={'button btn-close'} />
+          </div>
+        )}
       </form>
 
       <Alert onClose={showAlert.onClose} show={showAlert.show} title={showAlert.title} message={showAlert.message} status={showAlert.status} />

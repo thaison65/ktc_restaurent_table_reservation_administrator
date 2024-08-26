@@ -7,10 +7,10 @@ function ItemSidebar({ ...props }) {
 
   return (
     <>
-      <li className={`item-sidebar ${focus ? 'focus-sidebar' : ''}`}>
+      <li title={title} className={`item-sidebar ${focus ? 'focus-sidebar' : ''}`}>
         <Link to={path} className='link-item'>
           <img src={icon} alt={alt} />
-          <span >{title}</span>
+          <span>{title}</span>
         </Link>
       </li>
     </>

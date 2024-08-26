@@ -83,3 +83,30 @@ form#form-order {
     }
   }
 }
+
+@media (max-width: 1024px) {
+  form#form-order {
+    h3 {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba($color: App.$black, $alpha: 0.7);
+      margin-left: 8px;
+
+      & > span {
+        color: App.$black;
+      }
+    }
+    section#content-booking-detail {
+      grid-template-areas:
+        'info'
+        'desk'
+        'select';
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+}

@@ -11,6 +11,7 @@ function ChildrenModalCategory({ ...props }) {
   const [id, setID] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [errors, setErrors] = useState({ name: '', description: '', errors: '' });
 
   const [showAlert, setShowAlert] = useState({ show: false, onClose: null, title: '', message: '', status: 'success' });
 
@@ -36,17 +37,18 @@ function ChildrenModalCategory({ ...props }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!checkLength(name, 3, 100)) {
-      console.error('Sai tên khu vực');
-      return;
-    }
-
-    if (!checkLength(description, 5, 500)) {
-      console.error('Sai mô tả khu vực');
-      return;
-    }
-
     try {
+      if (!checkLength(name, 3, 100)) {
+        console.error('Tên khu vực có ít nhất 3 ký tự');
+        setErrors({ name: 'Tên khu vực có ít nhất 3 ký tự' });
+        throw new Error('Tên khu vực có ít nhất 3 ký tự');
+      }
+
+      if (!checkLength(description, 5, 500)) {
+        console.error('Mô tả của khu vực có ít nhất 5 ký tự');
+        setErrors({ description: 'Mô tả của khu vực có ít nhất 5 ký tự' });
+        throw new Error('Mô tả của khu vực có ít nhất 5 ký tự');
+      }
       const data = {
         name: name,
         description: description,
@@ -62,13 +64,13 @@ function ChildrenModalCategory({ ...props }) {
         status: 'success',
       });
       handleTriggerReload();
-      console.log('Cập nhật khu vực thành công');
+      setErrors({ name: '', description: '', errors: '' });
     } catch (e) {
       setShowAlert({
         show: true,
         onClose: handleCloseError,
         title: 'Lỗi khi cập nhật',
-        message: 'Cập nhật trạng thái không thành công',
+        message: e.message,
         status: 'error',
       });
       console.error(e);
@@ -84,7 +86,6 @@ function ChildrenModalCategory({ ...props }) {
           placeholder={'Nhập mã khu vực'}
           value={id}
           onChange={(e) => setID(e.target.value)}
-          required
           readOnly
         />
         <InputField
@@ -94,7 +95,7 @@ function ChildrenModalCategory({ ...props }) {
           placeholder={'Nhập tên khu vực'}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
+          error={errors.name}
         />
         <InputField
           label={'Mô tả'}
@@ -103,7 +104,7 @@ function ChildrenModalCategory({ ...props }) {
           placeholder={'Nhập tên khu vực'}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
+          error={errors.description}
         />
 
         <div className='container-btn'>

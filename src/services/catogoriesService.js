@@ -43,7 +43,7 @@ export const putCategory = async (id, data) => {
 
 export const deleteCategory = async (id) => {
   try {
-    const response = await del('category/', { id: id });
+    const response = await del('/category/delete', { id: id });
     return response;
   } catch (error) {
     throw new Error(`Delete failed: ${error}`);

@@ -4,11 +4,14 @@ import InputField from '~/components/common/InputField';
 import FileInput from '~/components/common/InputField/FileInput';
 import Button from '~/components/common/Button';
 import SelectArea from '~/components/common/SelectItem';
+import Loading from '~/components/common/Dialog/Loading';
+import Alert from '~/components/common/Dialog/Alert';
+
+import { getCategories, postView, putView } from '~/services';
+import { checkLength, checkRequired } from '~/utils/validation';
+import { uploadFile } from '~/services/upload-file';
 
 import './ChildrenModal.scss';
-import { getCategories, postView, putView } from '~/services';
-import { checkRequired } from '~/utils/validation';
-import Alert from '~/components/common/Dialog/Alert';
 
 function ChildrenModal({ ...props }) {
   const { onClose, item = {}, action, handleTriggerReload } = props;
@@ -17,11 +20,12 @@ function ChildrenModal({ ...props }) {
 
   const [id, setID] = useState('');
   const [name, setName] = useState('');
-  const [selectedArea, setSelectedArea] = useState('');
+  const [selectedArea, setSelectedArea] = useState(0);
   const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState({ name: '', description: '', errors: '' });
 
+  const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState({ show: false, onClose: null, title: '', message: '', status: 'success' });
 
   const handleSelect = (event) => {
@@ -46,32 +50,41 @@ function ChildrenModal({ ...props }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newErrors = {};
+      if (!checkRequired(selectedFile)) {
+        throw new Error('Hình ảnh không được để trống');
+      }
 
       if (!checkRequired(name)) {
-        newErrors.name = 'Tên bàn không được trống';
+        setErrors({ name: 'Tên bàn không được trống' });
+        throw new Error('Tên bàn không được trống');
       }
 
-      if (!checkRequired(description)) {
-        newErrors.description = 'Mô tả của bàn không được trống';
+      if (!checkLength(description, 5, 500)) {
+        console.error('Mô tả của bàn có ít nhất 5 ký tự');
+        setErrors({ description: 'Mô tả của bàn có ít nhất 5 ký tự' });
+        throw new Error('Mô tả của bàn có ít nhất 5 ký tự');
       }
 
-      if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        return;
-      }
+      let urlImage = '';
+      setShowLoading(true);
 
-      console.log('Submitting form with data:', { name, selectedArea, description, selectedFile });
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+        const reponse = await uploadFile(formData);
+        urlImage = reponse.data;
+      }
 
       const data = {
         name: name,
-        desk_img: 'Not image',
+        desk_img: urlImage,
         description: description,
         category_id: selectedArea,
       };
 
       if (action === 'add') {
         await postView(data);
+        setShowLoading(false);
         setShowAlert({
           show: true,
           onClose: handleCloseAlert,
@@ -79,9 +92,9 @@ function ChildrenModal({ ...props }) {
           message: 'Thông tin được thêm thành công',
           status: 'success',
         });
-        return;
       } else {
         await putView(id, data);
+        setShowLoading(false);
         setShowAlert({
           show: true,
           onClose: handleCloseAlert,
@@ -92,18 +105,19 @@ function ChildrenModal({ ...props }) {
       }
 
       // Clear the form after submission (optional)
+      handleTriggerReload();
+
       setName('');
       setSelectedArea('');
       setDescription('');
       setSelectedFile(null);
       setErrors({ name: '', description: '', errors: '' });
-
-      handleTriggerReload();
     } catch (e) {
+      setShowLoading(false);
       setShowAlert({
         show: true,
         onClose: handleCloseError,
-        title: 'Bị lỗi rồi nè!!!!',
+        title: 'Thông tin nhập sai!!!',
         message: e.message,
         status: 'error',
       });
@@ -114,6 +128,7 @@ function ChildrenModal({ ...props }) {
   useEffect(() => {
     if (item) {
       setID(item.id || '');
+      setSelectedFile(item.image || '');
       setName(item.name || '');
       setDescription(item.description || '');
       // Set file if item has one
@@ -128,6 +143,7 @@ function ChildrenModal({ ...props }) {
           }));
 
           setCategories(tables);
+          setSelectedArea(tables[0]?.id);
 
           if (item.categoryName) {
             const category = tables.find((value) => value.title === item.categoryName);
@@ -147,11 +163,11 @@ function ChildrenModal({ ...props }) {
   return (
     <>
       <form className='form' onSubmit={handleSubmit}>
-        <FileInput placeholderLabel='Chọn hình' onFileSelect={handleFileSelect} />
+        <FileInput placeholderLabel='Chọn hình' onFileSelect={handleFileSelect} selectedFile={selectedFile} />
 
-        {item.id && <InputField id='id' name='id' label='ID: ' value={id} onChange={(e) => setID(e.target.value)} required readOnly />}
+        {item.id && <InputField id='id' name='id' label='ID: ' value={id} onChange={(e) => setID(e.target.value)} readOnly />}
 
-        <InputField id='name' name='name' label='Tên bàn: ' value={name} onChange={(e) => setName(e.target.value)} error={errors.name} required />
+        <InputField id='name' name='name' label='Tên bàn: ' value={name} onChange={(e) => setName(e.target.value)} error={errors.name} />
 
         <SelectArea title={'Chọn khu vực'} options={categories} onSelect={handleSelect} selectedValue={selectedArea} />
 
@@ -162,13 +178,16 @@ function ChildrenModal({ ...props }) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           error={errors.description}
-          required
         />
 
-        <div className='container-btn'>
-          <Button type='submit' title={'Gửi thông tin'} classes={'button btn-submit'} />
-          <Button onClick={onClose} title={'Đóng'} classes={'button btn-close'} />
-        </div>
+        {showLoading ? (
+          <Loading show={showLoading} />
+        ) : (
+          <div className='container-btn'>
+            <Button type='submit' title={'Gửi thông tin'} classes={'button btn-submit'} />
+            <Button onClick={onClose} title={'Đóng'} classes={'button btn-close'} />
+          </div>
+        )}
       </form>
 
       <Alert onClose={showAlert.onClose} show={showAlert.show} title={showAlert.title} message={showAlert.message} status={showAlert.status} />

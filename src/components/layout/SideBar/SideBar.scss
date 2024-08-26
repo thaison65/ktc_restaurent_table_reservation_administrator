@@ -12,6 +12,10 @@ aside {
     width: 165px;
     margin-top: 32px;
 
+    img {
+      display: none;
+    }
+
     h1 {
       color: App.$white;
       font-size: 32px;
@@ -26,5 +30,34 @@ aside {
     display: flex;
     flex-direction: column;
     gap: 24px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  aside {
+    .logo {
+      display: flex;
+      justify-content: center;
+      width: auto;
+      h1 {
+        display: none;
+      }
+
+      img {
+        display: block;
+        margin-top: 32px;
+      }
+    }
+
+    li.item-sidebar {
+      margin: 0 10px;
+      & > .link-item {
+        padding: 8px 16px;
+
+        & > span {
+          display: none;
+        }
+      }
+    }
   }
 }

@@ -136,3 +136,10 @@ header {
     }
   }
 }
+
+@media (max-width: 1024px) {
+  #event-page {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

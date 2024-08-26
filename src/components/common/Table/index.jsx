@@ -36,7 +36,7 @@ const status = [
 ];
 
 function Table({ ...props }) {
-  const { titles, datas, handleClickBtnUpdate, recordsPerPage, titleUpdate = 'Chỉnh sửa', titleDelete } = props;
+  const { titles, datas, handleClickBtnUpdate, recordsPerPage, titleUpdate = 'Chỉnh sửa', titleDelete, handleDelete } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -65,6 +65,13 @@ function Table({ ...props }) {
               <tr key={index}>
                 <td>{index + 1}</td>
                 {Object.entries(data).map(([key, value], index) => {
+                  if (key === 'image') {
+                    return (
+                      <td key={index}>
+                        <img src={value} alt={value} className='image-table' />
+                      </td>
+                    );
+                  }
                   if (key === 'status') {
                     return (
                       <td key={index}>
@@ -83,7 +90,9 @@ function Table({ ...props }) {
                 })}
                 <td className='container-edit'>
                   <Button icon={settingEditSVGIcon} title={titleUpdate} classes={'btn-update button'} onClick={() => handleClickBtnUpdate(data)} />
-                  {titleDelete && <Button icon={deleteSVGIcon} title={titleDelete} classes={'btn-delete button'} />}
+                  {titleDelete && (
+                    <Button icon={deleteSVGIcon} title={titleDelete} classes={'btn-delete button'} onClick={() => handleDelete(data.id)} />
+                  )}
                 </td>
               </tr>
             ))

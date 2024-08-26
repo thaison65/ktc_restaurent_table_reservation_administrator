@@ -1,7 +1,7 @@
 import axiosClient from './axios-client';
 
 const request = axiosClient.create({
-  baseURL: `https://3806-58-187-122-34.ngrok-free.app`,
+  baseURL: `https://1695-2001-ee0-4f0a-ebc0-95c1-872c-6502-9e88.ngrok-free.app`,
 });
 
 export const get = async (path, option = {}) => {
@@ -19,7 +19,17 @@ export const get = async (path, option = {}) => {
 export const post = async (path, option = {}, data) => {
   const id = option.id || '';
 
-  const response = await request.post(`${path}${id}`, data);
+  let headers = {
+    // Thiết lập Content-Type header
+  };
+
+  if (option.headers) {
+    headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+  }
+
+  const response = await request.post(`${path}${id}`, data, { headers });
   console.log(response.status);
 
   return response.data;
@@ -28,8 +38,6 @@ export const post = async (path, option = {}, data) => {
 export const put = async (path, option = {}, data) => {
   try {
     const id = option.id || '';
-
-    console.log(id, 'data:', data);
 
     const response = await request.put(`${path}${id}`, data);
     console.log(response.status);
@@ -44,7 +52,7 @@ export const del = async (path, option = {}) => {
   try {
     const id = option.id || '';
 
-    const response = await request.delete(`${path}/${id}`);
+    const response = await request.patch(`${path}/${id}`);
     console.log(response.status);
 
     return response;

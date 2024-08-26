@@ -4,7 +4,7 @@ export const getViews = async () => {
   try {
     const response = await get('views/all');
 
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error(`Get List failed: ${error}`);
   }
@@ -21,7 +21,7 @@ export const postView = async (data) => {
 
 export const putView = async (id, data) => {
   try {
-    const response = await put(`views/detail-`, id, data);
+    const response = await put(`views/detail-`, { id: id }, data);
 
     return response;
   } catch (error) {
@@ -31,7 +31,7 @@ export const putView = async (id, data) => {
 
 export const deleteView = async (id) => {
   try {
-    const response = await del('views/', id);
+    const response = await del('views/delete', { id: id });
     return response;
   } catch (error) {
     throw new Error(`Delete failed: ${error}`);

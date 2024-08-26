@@ -9,7 +9,8 @@ import { addSVGIcon } from '~/assets/icons';
 
 import './ListTable.scss';
 import Button from '~/components/common/Button';
-import { getViews } from '~/services';
+import { deleteView, getViews } from '~/services';
+import Alert from '~/components/common/Dialog/Alert';
 
 const titles = ['STT', 'Hình ảnh', 'ID', 'Tên bàn', 'Khu vực', 'Mô tả'];
 
@@ -20,6 +21,8 @@ function ListTablePage() {
   const [itemUpdated, setItemUpdated] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [action, setAction] = useState('add');
+
+  const [showAlert, setShowAlert] = useState({ show: false, onClose: null, title: '', message: '', status: 'success' });
 
   const [triggerReload, setTriggerReload] = useState(false);
 
@@ -39,6 +42,36 @@ function ListTablePage() {
     setAction('update');
   };
 
+  const handleDelete = async (id) => {
+    if (id) {
+      try {
+        await deleteView(id);
+
+        handleTriggerReload();
+        setShowAlert({
+          show: true,
+          onClose: handleClose,
+          title: 'Xóa thành công',
+          message: 'Xóa khu vực thành công',
+          status: 'success',
+        });
+      } catch (e) {
+        setShowAlert({
+          show: true,
+          onClose: handleClose,
+          title: 'Xóa thất bại',
+          message: 'Xóa khu vực thất bại',
+          status: 'error',
+        });
+        console.log(e);
+      }
+    }
+  };
+
+  const handleClose = () => {
+    setShowAlert({ show: false });
+  };
+
   const handleTriggerReload = () => {
     setTriggerReload(!triggerReload);
   };
@@ -49,7 +82,7 @@ function ListTablePage() {
         const response = await getViews();
 
         const tables = response.map((item) => ({
-          desk_img: item.desk_img,
+          image: item.desk_img,
           id: item.id,
           name: item.name,
           categoryName: item.category.name,
@@ -88,11 +121,20 @@ function ListTablePage() {
         <Button icon={addSVGIcon} title={'Thêm bàn'} classes={'btn-add button'} onClick={handleOpenModal} />
       </div>
 
-      <Table titles={titles} datas={datas} handleClickBtnUpdate={handleClickBtnUpdate} recordsPerPage={7} titleDelete={'Xóa bàn'} />
+      <Table
+        titles={titles}
+        datas={datas}
+        handleClickBtnUpdate={handleClickBtnUpdate}
+        recordsPerPage={5}
+        titleDelete={'Xóa bàn'}
+        handleDelete={handleDelete}
+      />
 
       <ModalDialog show={showModal} onClose={handleCloseModal} title={'Thông tin bàn'}>
         <ChildrenModal onClose={handleCloseModal} item={itemUpdated} action={action} handleTriggerReload={handleTriggerReload} />
       </ModalDialog>
+
+      <Alert onClose={showAlert.onClose} show={showAlert.show} title={showAlert.title} message={showAlert.message} status={showAlert.status} />
     </>
   );
 }

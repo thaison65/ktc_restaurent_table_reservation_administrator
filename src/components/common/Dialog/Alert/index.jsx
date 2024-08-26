@@ -8,14 +8,17 @@ function Alert({ ...props }) {
 
   useEffect(() => {
     if (show) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 800);
+      const timer = setTimeout(
+        () => {
+          onClose();
+        },
+        status === 'success' ? 800 : 1200
+      );
 
       // Clear timeout nếu component unmount trước khi timer kết thúc
       return () => clearTimeout(timer);
     }
-  }, [show, onClose]);
+  }, [show, onClose, status]);
 
   if (!show) {
     return null;
