@@ -189,7 +189,7 @@ function Category() {
         recordsPerPage={4}
         handleClickBtnUpdate={handleClickBtnUpdate}
         titleDelete={'Xóa'}
-        handleDelete={handleDelete}
+        handleDel={handleDelete}
       />
 
       <ModalDialog show={showModal} onClose={handleCloseModal} title={'Thông tin khu vực bàn'}>
