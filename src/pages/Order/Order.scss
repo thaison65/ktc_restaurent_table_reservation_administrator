@@ -1,3 +1,27 @@
+@use '../../App.scss';
+
+div.header-content-table {
+  align-items: center;
+  gap: 12px;
+
+  & > label.title-sort {
+    font-weight: 600;
+  }
+
+  & > select.select-sort {
+    margin-right: 12px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: 1px solid App.$gray;
+    background-color: App.$white;
+    color: App.$black;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+}
+
 #content-page-order {
   margin-top: 24px;
   height: 100%;

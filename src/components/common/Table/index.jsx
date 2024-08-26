@@ -85,6 +85,14 @@ function Table({ ...props }) {
                 <td>{index + 1}</td>
                 {Object.entries(data).map(([key, value], index) => {
                   if (key === 'image') {
+                    if (!value) {
+                      return (
+                        <td key={index}>
+                          <div className='empty-image'></div>
+                        </td>
+                      );
+                    }
+
                     return (
                       <td key={index}>
                         <img src={value} alt={value} className='image-table' />

@@ -7,12 +7,17 @@ function FileInput({ placeholderLabel = 'Upload Image', onFileSelect, selectedFi
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-        onFileSelect(file); // Pass file back to the parent when selected
-      };
-      reader.readAsDataURL(file);
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']; // Add other image types if needed
+      if (validImageTypes.includes(file.type)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setSelectedImage(reader.result);
+          onFileSelect(file); // Pass file back to the parent when selected
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Xin hãy chỉ chọn hình ảnh với .đuôi (JPEG, PNG, GIF)');
+      }
     }
   };
 
