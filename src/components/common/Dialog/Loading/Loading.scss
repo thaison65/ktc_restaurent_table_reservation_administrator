@@ -1,0 +1,32 @@
+@use '../../../../App.scss';
+
+article.container-loader {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  .loader {
+    border: 6px solid App.$gray;
+    border-top: 6px solid App.$primary;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  & > span {
+    font-size: 24px;
+    font-weight: 600;
+  }
+}

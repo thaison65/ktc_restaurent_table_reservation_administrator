@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './FileInput.scss';
 
-function FileInput({ ...props }) {
-  const { placeholderLabel = 'Upload Image', onFileSelect } = props;
-
+function FileInput({ placeholderLabel = 'Upload Image', onFileSelect, selectedFile }) {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleFileChange = (event) => {
@@ -12,15 +10,24 @@ function FileInput({ ...props }) {
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result);
-        onFileSelect(file); // Trả file ra ngoài khi chọn
+        onFileSelect(file); // Pass file back to the parent when selected
       };
       reader.readAsDataURL(file);
     }
   };
 
+  useEffect(() => {
+    if (selectedImage) {
+      return;
+    }
+    if (selectedFile) {
+      setSelectedImage(selectedFile);
+    }
+  }, [selectedFile, selectedImage]);
+
   return (
     <div className='file-input-container'>
-      <div className='image-preview'>{selectedImage ? <img src={selectedImage} alt='Selected' /> : <div className='empty-placeholder'></div>}</div>
+      <div className='image-preview'>{selectedImage ? <img src={selectedImage} alt='' /> : <div className='empty-placeholder'></div>}</div>
       <input type='file' id='file-upload' accept='image/*' onChange={handleFileChange} />
       <label htmlFor='file-upload' className='custom-file-upload'>
         {placeholderLabel}

@@ -1,7 +1,7 @@
 import axiosClient from './axios-client';
 
 const request = axiosClient.create({
-  baseURL: `http://localhost:3065/api/`,
+  baseURL: `https://1695-2001-ee0-4f0a-ebc0-95c1-872c-6502-9e88.ngrok-free.app`,
 });
 
 export const get = async (path, option = {}) => {
@@ -9,6 +9,7 @@ export const get = async (path, option = {}) => {
 
   try {
     const response = await request.get(`${path}${id}`);
+    console.log(response.status);
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -18,11 +19,19 @@ export const get = async (path, option = {}) => {
 export const post = async (path, option = {}, data) => {
   const id = option.id || '';
 
-  const headers = {
-    'Content-Type': 'multipart/form-data',
+  let headers = {
+    // Thiết lập Content-Type header
   };
 
-  const response = await request.post(`${path}/${id}`, data, { headers });
+  if (option.headers) {
+    headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+  }
+
+  const response = await request.post(`${path}${id}`, data, { headers });
+  console.log(response.status);
+
   return response.data;
 };
 
@@ -30,12 +39,9 @@ export const put = async (path, option = {}, data) => {
   try {
     const id = option.id || '';
 
-    const headers = {
-      // Thiết lập Content-Type header
-      'Content-Type': 'multipart/form-data',
-    };
+    const response = await request.put(`${path}${id}`, data);
+    console.log(response.status);
 
-    const response = await request.put(`${path}/${id}`, data, { headers });
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -46,7 +52,9 @@ export const del = async (path, option = {}) => {
   try {
     const id = option.id || '';
 
-    const response = await request.delete(`${path}/${id}`);
+    const response = await request.patch(`${path}/${id}`);
+    console.log(response.status);
+
     return response;
   } catch (error) {
     throw new Error(error);

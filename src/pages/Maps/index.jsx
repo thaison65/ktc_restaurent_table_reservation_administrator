@@ -58,8 +58,8 @@ function MapsPage() {
     <>
       <div className='header-content'>
         <SelectArea options={categories} onSelect={handleSelect} selectedValue={selectedArea} title={'Chọn khu vực:'} />
-
-        {/* <section id='container-status'>
+        {/* 
+        <section id='container-status'>
           <div className='note-status'>
             <div className='ellipse active'></div>
             <span>Đang được sử dụng</span>
@@ -71,7 +71,7 @@ function MapsPage() {
         </section> */}
       </div>
 
-      <div id='content-maps'>
+      <section id='content-maps'>
         <div id='container-maps'>
           {tables.map((value) => {
             return <ItemDesk key={value.id} id={value.id} title={value.name} status={value.status} />;
@@ -79,7 +79,7 @@ function MapsPage() {
         </div>
 
         <div className='container-balcony'>Ngoài ban công</div>
-      </div>
+      </section>
     </>
   );
 }

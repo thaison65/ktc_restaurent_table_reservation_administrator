@@ -1,9 +1,13 @@
-$primary: #2ba8fb !default;
 $white: #ffffff;
 $black: #141522;
 $gray: #d9d9d9;
 $light-gray: #f9f9f9;
-$red: #ff4d5e;
+
+$primary: #2ba8fb !default;
+$danger: #ff4d5e;
+$success: #4ade80;
+$warning: #facc15;
+$error: #fef2f2;
 
 $border-gray: #f5f5f7;
 
@@ -33,4 +37,14 @@ $border-gray: #f5f5f7;
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+@mixin alert-success {
+  background-color: #f0fdf4;
+  color: #15803d;
+}
+
+@mixin alert-error {
+  background-color: $error;
+  color: #b91c1c;
 }

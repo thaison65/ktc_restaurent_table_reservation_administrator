@@ -1,3 +1,6 @@
+// Logo
+import logoTablet from './logoTablet.svg';
+
 // Icons for Sidebar
 import categorySVGIcon from './categoryIcon.svg';
 import taskSVGIcon from './taskIcon.svg';
@@ -24,7 +27,12 @@ import settingEditSVGIcon from './settingEditIcon.svg';
 // Icons for Modal
 import closeSVGIcon from './closeIcon.svg';
 
+// Icon for Alert
+import checkedSVGIcon from './checkedIcon.svg';
+import errorSVGIcon from './errorIcon.svg';
+
 export {
+  logoTablet,
   categorySVGIcon,
   taskSVGIcon,
   boxSVGIcon,
@@ -42,4 +50,6 @@ export {
   deleteSVGIcon,
   settingEditSVGIcon,
   closeSVGIcon,
+  checkedSVGIcon,
+  errorSVGIcon,
 };

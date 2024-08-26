@@ -19,3 +19,15 @@ div#container {
     padding-left: 30px;
   }
 }
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  div#container {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: auto 1fr;
+
+    main {
+      width: 100%;
+      overflow-x: scroll;
+    }
+  }
+}

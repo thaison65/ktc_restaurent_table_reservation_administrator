@@ -1,19 +1,19 @@
 import ListTablePage from '~/pages/ListTable';
-import MapsPage from '~/pages/Maps';
+// import MapsPage from '~/pages/Maps';
 import OrderPage from '~/pages/Order';
 import Category from '~/pages/Category';
 
 const privateRouter = [
   {
-    path: '/KTC_FE_MINI_PROJECT/list-table',
+    path: '/KTC_FE_MINI_PROJECT',
     component: ListTablePage,
     name: 'Danh sách bàn',
   },
-  {
-    path: '/KTC_FE_MINI_PROJECT',
-    component: MapsPage,
-    name: 'Sơ đồ vị trí',
-  },
+  // {
+  //   path: '/KTC_FE_MINI_PROJECT',
+  //   component: MapsPage,
+  //   name: 'Sơ đồ vị trí',
+  // },
   {
     path: '/KTC_FE_MINI_PROJECT/order',
     component: OrderPage,

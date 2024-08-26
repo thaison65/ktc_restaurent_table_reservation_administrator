@@ -7,8 +7,36 @@ import Button from '../Button';
 
 import './Table.scss';
 
+const status = [
+  {
+    id: 0,
+    title: 'Không nhận đơn đặt bàn',
+    color: 'inactive',
+  },
+  {
+    id: 1,
+    title: 'Chấp thuận đơn đặt bàn',
+    color: 'success',
+  },
+  {
+    id: 2,
+    title: 'Chờ xác nhận',
+    color: 'warning',
+  },
+  {
+    id: 3,
+    title: 'Đơn đặt bàn bị hủy',
+    color: 'danger',
+  },
+  {
+    id: 4,
+    title: 'Đơn đã hoàn thành',
+    color: 'primary',
+  },
+];
+
 function Table({ ...props }) {
-  const { titles, datas, handleClickBtnUpdate, recordsPerPage, titleUpdate = 'Chỉnh sửa', titleDelete } = props;
+  const { titles, datas, handleClickBtnUpdate, recordsPerPage, titleUpdate = 'Chỉnh sửa', titleDelete, handleDelete } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,18 +63,47 @@ function Table({ ...props }) {
           {Array.isArray(currentData) && currentData.length > 0 ? (
             currentData.map((data, index) => (
               <tr key={index}>
-                {Object.values(data).map((value, index) => {
-                  return <td key={index}>{value}</td>;
+                <td>{index + 1}</td>
+                {Object.entries(data).map(([key, value], index) => {
+                  if (key === 'image') {
+                    return (
+                      <td key={index}>
+                        <img src={value} alt={value} className='image-table' />
+                      </td>
+                    );
+                  }
+                  if (key === 'status') {
+                    return (
+                      <td key={index}>
+                        <section className='container-status-booking'>
+                          <div className={`badge badge-${status.find((item) => item.id === value).color}`}></div>{' '}
+                          <span>{status.find((item) => item.id === value).title}</span>
+                        </section>
+                      </td>
+                    );
+                  }
+                  return (
+                    <td key={index}>
+                      {typeof value === 'string' && value.length < 30 ? value : typeof value === 'string' ? value.substring(0, 27) + '...' : value}
+                    </td>
+                  );
                 })}
                 <td className='container-edit'>
                   <Button icon={settingEditSVGIcon} title={titleUpdate} classes={'btn-update button'} onClick={() => handleClickBtnUpdate(data)} />
-                  {titleDelete && <Button icon={deleteSVGIcon} title={titleDelete} classes={'btn-delete button'} />}
+                  {titleDelete && (
+                    <Button icon={deleteSVGIcon} title={titleDelete} classes={'btn-delete button'} onClick={() => handleDelete(data.id)} />
+                  )}
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={titles.length + 1}>{'Dữ liệu không có'}</td>
+              <td colSpan={titles.length + 1}>
+                <div className='container-loader'>
+                  <div className='loader'></div>
+                  <span>{'Dữ liệu không có'}</span>
+                </div>
+              </td>
             </tr>
           )}
         </tbody>
