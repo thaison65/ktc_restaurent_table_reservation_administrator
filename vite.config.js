@@ -5,7 +5,6 @@ import { fileURLToPath, URL } from 'node:url';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/ktc_fe_mini_project/',
   resolve: {
     alias: [
       {
