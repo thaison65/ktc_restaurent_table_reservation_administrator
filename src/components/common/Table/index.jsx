@@ -110,7 +110,7 @@ function Table({ ...props }) {
                     );
                   }
                   return (
-                    <td key={index}>
+                    <td key={index} title={value}>
                       {typeof value === 'string' && value.length < 30 ? value : typeof value === 'string' ? value.substring(0, 27) + '...' : value}
                     </td>
                   );
